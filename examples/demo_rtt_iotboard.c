@@ -55,7 +55,7 @@
 
 #define ENUM_TO_STR(e) (#e)
 
-typedef enum
+typedef enum// @NOTE 
 {
     USER_BUTTON_0 = 0,
     USER_BUTTON_1,
@@ -122,7 +122,7 @@ static void common_btn_evt_cb(void *arg)
 
     rt_kprintf("id: [%d - %s]  event: [%d - %30s]  repeat: %d\n", 
         btn->id, enum_btn_id_string[btn->id],
-        btn->event, enum_event_string[btn->event],
+        btn->event, enum_event_string[btn->event],// @NOTE 
         btn->click_cnt);
 
     if ((flex_button_event_read(&user_button[USER_BUTTON_0]) == FLEX_BTN_PRESS_CLICK) &&\
@@ -132,7 +132,7 @@ static void common_btn_evt_cb(void *arg)
     }
 }
 
-static void button_scan(void *arg)
+static void button_scan(void *arg)// @NOTE 
 {
     while(1)
     {
@@ -141,7 +141,7 @@ static void button_scan(void *arg)
     }
 }
 
-static void user_button_init(void)
+static void user_button_init(void)// @NOTE 
 {
     int i;
     
@@ -156,7 +156,7 @@ static void user_button_init(void)
     {
         user_button[i].id = i;
         user_button[i].usr_button_read = common_btn_read;
-        user_button[i].cb = common_btn_evt_cb;
+        user_button[i].cb = common_btn_evt_cb;// @NOTE 
         user_button[i].pressed_logic_level = 0;
         user_button[i].short_press_start_tick = FLEX_MS_TO_SCAN_CNT(1500);
         user_button[i].long_press_start_tick = FLEX_MS_TO_SCAN_CNT(3000);
@@ -175,7 +175,7 @@ int flex_button_main(void)
 {
     rt_thread_t tid = RT_NULL;
 
-    user_button_init();
+    user_button_init();// @NOTE 
 
     /* Create background ticks thread */
     tid = rt_thread_create("flex_btn", button_scan, RT_NULL, 1024, 10, 10);

@@ -32,8 +32,8 @@
 
 #ifndef NULL
 #define NULL 0
-#endif
-
+#endi
+// @NOTE 
 #define EVENT_SET_AND_EXEC_CB(btn, evt)                                        \
     do                                                                         \
     {                                                                          \
@@ -136,7 +136,7 @@ int32_t flex_button_register(flex_button_t *button)
  * @param void
  * @return none
 */
-static void flex_button_read(void)
+static void flex_button_read(void)// @NOTE 
 {
     uint8_t i;
     flex_button_t* target;
@@ -151,7 +151,7 @@ static void flex_button_read(void)
         raw_data = raw_data | ((target->usr_button_read)(target) << i);
     }
 
-    g_btn_status_reg = (~raw_data) ^ g_logic_level;
+    g_btn_status_reg = (~raw_data) ^ g_logic_level;// @NOTE 
 }
 
 /**
@@ -161,7 +161,7 @@ static void flex_button_read(void)
  * @param void
  * @return Activated button count
 */
-static uint8_t flex_button_process(void)
+static uint8_t flex_button_process(void)// @NOTE 
 {
     uint8_t i;
     uint8_t active_btn_cnt = 0;
@@ -180,7 +180,7 @@ static uint8_t flex_button_process(void)
 
         switch (target->status)
         {
-        case FLEX_BTN_STAGE_DEFAULT: /* stage: default(button up) */
+        case FLEX_BTN_STAGE_DEFAULT: /* stage: default(button up) */// @NOTE 
             if (BTN_IS_PRESSED(i)) /* is pressed */
             {
                 target->scan_cnt = 0;
@@ -197,14 +197,14 @@ static uint8_t flex_button_process(void)
             }
             break;
 
-        case FLEX_BTN_STAGE_DOWN: /* stage: button down */
+        case FLEX_BTN_STAGE_DOWN: /* stage: button down */// @NOTE // @NOTE 
             if (BTN_IS_PRESSED(i)) /* is pressed */
             {
                 if (target->click_cnt > 0) /* multiple click */
                 {
                     if (target->scan_cnt > target->max_multiple_clicks_interval)
                     {
-                        EVENT_SET_AND_EXEC_CB(target, 
+                        EVENT_SET_AND_EXEC_CB(target, // @NOTE , callback
                             target->click_cnt < FLEX_BTN_PRESS_REPEAT_CLICK ? 
                                 target->click_cnt :
                                 FLEX_BTN_PRESS_REPEAT_CLICK);
@@ -237,7 +237,7 @@ static uint8_t flex_button_process(void)
                     }
                 }
             }
-            else /* button up */
+            else /* button up */// @NOTE 
             {
                 if (target->scan_cnt >= target->long_hold_start_tick)
                 {
@@ -263,7 +263,7 @@ static uint8_t flex_button_process(void)
             }
             break;
 
-        case FLEX_BTN_STAGE_MULTIPLE_CLICK: /* stage: multiple click */
+        case FLEX_BTN_STAGE_MULTIPLE_CLICK: /* stage: multiple click */// @NOTE 
             if (BTN_IS_PRESSED(i)) /* is pressed */
             {
                 /* swtich to button down stage */
@@ -318,7 +318,7 @@ flex_button_event_t flex_button_event_read(flex_button_t* button)
  * @param void
  * @return Activated button count
 */
-uint8_t flex_button_scan(void)
+uint8_t flex_button_scan(void)// @NOTE 
 {
     flex_button_read();
     return flex_button_process();

@@ -43,7 +43,7 @@ typedef void (*flex_button_response_callback)(void*);
 
 typedef enum
 {
-    FLEX_BTN_PRESS_DOWN = 0,
+    FLEX_BTN_PRESS_DOWN = 0,// @NOTE 
     FLEX_BTN_PRESS_CLICK,
     FLEX_BTN_PRESS_DOUBLE_CLICK,
     FLEX_BTN_PRESS_REPEAT_CLICK,
